@@ -1,0 +1,25 @@
+{
+  "generator-jhipster": {
+    "baseName": "furmanDealer",
+    "packageName": "by.furman.dealer",
+    "packageFolder": "by/furman/dealer",
+    "authenticationType": "session",
+    "hibernateCache": "no",
+    "clusteredHttpSession": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": "no",
+    "useSass": true,
+    "buildTool": "gradle",
+    "frontendBuilder": "grunt",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "d28f290edd426ab32d362dd889c8799a7f77a254",
+    "testFrameworks": [
+      "gatling",
+      "cucumber"
+    ]
+  }
+}
