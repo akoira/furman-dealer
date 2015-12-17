@@ -1,0 +1,61 @@
+{
+    "order": {
+        "columnDefs": {
+            "name": {
+                "name": "Название",
+                "width": "150",
+                "pinned": "true"
+            },
+            "type": {
+                "name": "Материал",
+                "width": "150",
+                "pinned": "true"
+            },
+            "texture": {
+                "name": "Текстура",
+                "width": "150",
+                "pinned": "true"
+            },
+            "width": {
+                "name": "Ширина",
+                "width": "100"
+            },
+            "length": {
+                "name": "Длинна",
+                "width": "100"
+            },
+            "count": {
+                "name": "Кол-во",
+                "width": "100"
+            },
+            "rotatable": {
+                "name": "Пов.",
+                "width": "50"
+            },
+            "glueing": {
+                "name": "Оклейка",
+                "width": "150"
+            },
+            "milling": {
+                "name": "Фрезеровка",
+                "width": "150"
+            },
+            "drilling": {
+                "name": "Сверление",
+                "width": "150"
+            },
+            "groove": {
+                "name": "Паз",
+                "width": "150"
+            },
+            "a45": {
+                "name": "Угл. расп.",
+                "width": "150"
+            },
+            "cutoff": {
+                "name": "Срез",
+                "width": "150"
+            }
+        }
+    }
+}
