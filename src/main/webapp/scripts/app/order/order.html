@@ -1,7 +1,12 @@
 <div ng-cloak>
+    <div>
+        <input type="text" ng-model="vm.selected"
+               typeahead="state for state in vm.states | filter:$viewValue | limitTo:8" class="form-control">
+    </div>
     <div class="row-fluid">
         <div class="span12">
-            <div class="grid" ui-grid="vm.gridOptions" ui-grid-pinning ui-grid-auto-resize></div>
+            <div class="grid" ui-grid="vm.gridOptions" ui-grid-pinning ui-grid-auto-resize ui-grid-edit ui-grid-row-edit
+                 ui-grid-cellnav></div>
         </div>
     </div>
 </div>

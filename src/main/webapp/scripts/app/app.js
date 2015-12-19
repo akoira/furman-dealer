@@ -3,7 +3,8 @@
 angular.module('furmanDealerApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate',
     'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload',
     'ui.bootstrap', 'ui.router', 'infinite-scroll', 'angular-loading-bar',
-    'ui.grid', 'ui.grid.autoResize', 'ui.grid.pinning'])
+    'ui.grid', 'ui.grid.autoResize', 'ui.grid.pinning', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav',
+    'ui.select', 'ui.bootstrap.typeahead'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
         // update the window title using params in the following

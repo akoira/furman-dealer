@@ -3,6 +3,7 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 // bower:scss
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "font-awesome/scss/font-awesome.scss";
+@import "select2/src/scss/core.scss";
 // endbower
 
 body {
@@ -187,6 +188,25 @@ ul#strength {
 @media screen and (min-width: 480px) {
     .alerts .toast {
         width: 50%;
+    }
+}
+
+.ui-grid-cell {
+    overflow: visible;
+    z-index: 99999;
+
+    fm-select-editor {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        .selectize-input {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
     }
 }
 
