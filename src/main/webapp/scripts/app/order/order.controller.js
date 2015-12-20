@@ -134,7 +134,8 @@ function OrderController($scope, $q, $log, $translate, $filter) {
         {
             field: "rotatable",
             width: 50,
-            type: "boolean"
+            type: "boolean",
+            cellTemplate: "<div class='ui-grid-cell-contents' style='text-align: center;' title=\"TOOLTIP\"><i class='fa' ng-class=\"{'fa-check': COL_FIELD}\"></i></div>"
         },
         {
             field: "glueing",
