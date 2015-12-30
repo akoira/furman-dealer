@@ -211,5 +211,46 @@ ul#strength {
     }
 }
 
+.glueing-top {
+    border-top: 2px solid black;
+    height: 100%;
+}
+
+.glueing-left {
+    border-left: 2px solid black;
+    height: 100%;
+}
+
+.glueing-right {
+    border-right: 2px solid black;
+    height: 100%;
+}
+
+.glueing-bottom {
+    border-bottom: 2px solid black;
+    height: 100%;
+}
+
+.glueing-empty-top {
+    border-top: 1px dashed black;
+    height: 100%;
+}
+
+.glueing-empty-left {
+    border-left: 1px dashed black;
+    height: 100%;
+}
+
+.glueing-empty-right {
+    border-right: 1px dashed black;
+    height: 100%;
+}
+
+.glueing-empty-bottom {
+    border-bottom: 1px dashed black;
+    height: 100%;
+}
+
+
 /* end of Custom alerts for notification */
 

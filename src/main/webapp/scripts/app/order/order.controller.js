@@ -4,14 +4,21 @@ angular.module('furmanDealerApp').controller('OrderController', OrderController)
 //angular.module('furmanDealerApp').directive('uiSelectWrap', UISelectWrapDirective);
 //angular.module('furmanDealerApp').filter('type', TypeFilter)
 
-function OrderController($scope, $q, $log, $translate, $filter) {
+function OrderController($scope, $q, $log, $translate, $filter, orderUtils) {
+
+    var glueingRendersCache = new Map();
+
     var rowHeight = 25;
     var vm = this;
     vm.tableHeight = tableHeight;
+    vm.getGlueingHtml = getGlueingHtml;
+    vm.getGlueingLines = getGlueingLines;
+    vm.getGlueingClass = getGlueingClass;
 
     vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
     vm.gridOptions = {
+        appScopeProvider: vm,
         //rowHeight: rowHeight,
         data: [{name: "D1"},
             {name: "D1"},
@@ -139,7 +146,12 @@ function OrderController($scope, $q, $log, $translate, $filter) {
         },
         {
             field: "glueing",
-            width: 150
+            width: 150,
+            //rect x='0' y='0' width=\"{{vm.getWidth(rowRenderIndex)}}\" height=\"vm.getHeight(rowRenderIndex)\" style='fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9'/>
+            //<svg rect x="0" y="0" width="149" height="30" style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9"></svg>
+            //cellTemplate: "<div class='ui-grid-cell-contents' style='text-align: center;' title=\"TOOLTIP\">{{grid.appScope.getGlueingHtml(rowRenderIndex, col)}}</div>"
+            //cellTemplate: "<div class='ui-grid-cell-contents' style='text-align: center;' title=\"TOOLTIP\"><svg-rectangle lines=\"grid.appScope.getGlueingLines(rowRenderIndex, col)\"/></div>"
+            cellTemplate: "<div class='ui-grid-cell-contents' style='text-align: center;' title=\"TOOLTIP\"><div class=\"{{grid.appScope.getGlueingClass(rowRenderIndex, col)}}\"></div>"
         },
         {
             field: "milling",
@@ -182,6 +194,95 @@ function OrderController($scope, $q, $log, $translate, $filter) {
         return {
             height: (vm.gridOptions.data.length * rowHeight + rowHeight) + "px"
         };
+    }
+
+    function getGlueingHtml(rowRenderIndex, col) {
+        $timeout(function () {
+            var key = rowRenderIndex + '-' + col.uid + '-cell';
+            var html = glueingRendersCache.get(key);
+            var cellElem = $("[id$=-" + key + "]").children(".ui-grid-cell-contents");
+            if (!html) {
+                var x = 1;
+                var y = 1;
+                var width = cellElem.width() - 1;
+                var height = cellElem.height() - 1;
+                var stroke = "black";
+                var strokeWidth = 1;
+//        var html = sprintf("<svg><rect x='1' y='1' width='%d' height='%d' stroke-dasharray = '3,5' style=\"fill:blue;stroke: %s; stroke-width:%d;fill-opacity:0.1;stroke-opacity:0.9\"/></svg>", width, height, stroke, strokeWidth);
+//        var html = "<svg>" +
+//            sprintf("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke-dasharray = '3,5' style=\"stroke: %s;stroke-width:1;\" />", x, y, x + width, y, stroke) + //top
+//            sprintf("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke-dasharray = '3,5' style=\"stroke: %s;stroke-width:1;\" />", x + width, y, x + width, y + height, stroke) + //right
+//            sprintf("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"stroke: %s;stroke-width:1;\" />", x + width, y + height, x, y + height, "black") + //bottom
+//            sprintf("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"stroke: %s;stroke-width:1;\" />", x, y + height, x, y, "black") + //left
+//            "</svg>"
+
+                var points = [{
+                    x: x,
+                    y: y
+                }, {
+                    x: x + width,
+                    y: y
+                }, {
+                    x: x + width,
+                    y: y + height
+                }, {
+                    x: x,
+                    y: y + height
+                }];
+                var lines = [{
+                    p1: points[0],
+                    p2: points[1],
+                    dashArray: "3,5",
+                    stroke: "black"
+                }, {
+                    p1: points[1],
+                    p2: points[2],
+                    dashArray: "3,5",
+                    stroke: "black"
+                }, {
+                    p1: points[2],
+                    p2: points[3],
+                    dashArray: "3,5",
+                    stroke: "black"
+                }, {
+                    p1: points[3],
+                    p2: points[0],
+                    dashArray: "3,5",
+                    stroke: "black"
+                }];
+                html = orderUtils.createSVGRectHtml(lines);
+                glueingRendersCache.set(key, html);
+            }
+            //cellElem.html(html);
+        });
+    }
+
+    function getGlueingLines(rowRenderIndex, col) {
+        var cellElem = $("[id$=-" + rowRenderIndex + '-' + col.uid + '-cell' + "]").children(".ui-grid-cell-contents");
+        var x = 1;
+        var y = 1;
+        var width = cellElem.width() - 1;
+        var height = cellElem.height() - 1;
+        var stroke = "black";
+
+        var lines = [{
+            x1: x,
+            y1: y,
+            x2: x + width,
+            y2: y,
+            stroke: {
+                dashArray: "3,5"
+            },
+            style: {
+                stroke: "black"
+            }
+        }];
+
+        return [];
+    }
+
+    function getGlueingClass(rowRenderIndex, col) {
+        return "glueing-empty-top glueing-right glueing-empty-left glueing-bottom";
     }
 
     function testPromise(value) {
